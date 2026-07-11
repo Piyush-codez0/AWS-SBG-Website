@@ -43,7 +43,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-poppins)", "sans-serif"],
-        display: ["var(--font-space-grotesk)", "sans-serif"],
+        display: ["var(--font-poppins)", "sans-serif"],
         body: ["var(--font-poppins)", "sans-serif"],
       },
       maxWidth: {
