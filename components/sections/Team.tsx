@@ -10,6 +10,7 @@ type Member = {
   avatar: string;
   handle: string;
   status: string;
+  avatarScale?: number;
   socials?: {
     github?: string;
     linkedin?: string;
@@ -31,6 +32,15 @@ const TEAM: Member[] = [
     avatar: "/members/piyushrawat.png",
     handle: "piyushrawat",
     status: "Operating",
+    socials: { github: "https://github.com/", linkedin: "https://linkedin.com/" }
+  },
+  {
+    name: "Gaurav Shukla",
+    role: "Revealing soon...",
+    avatar: "/members/gauravshukla.png",
+    handle: "gauravshukla",
+    status: "Building",
+    avatarScale: 1.35,
     socials: { github: "https://github.com/", linkedin: "https://linkedin.com/" }
   },
   {
@@ -99,10 +109,10 @@ export function Team() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.1 }}
-          className="mt-14 sm:mt-20 grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-items-center"
+          className="mt-10 sm:mt-20 grid gap-4 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-items-center"
         >
           {TEAM.map((member) => (
-            <motion.div key={member.name} variants={itemVariants} className="w-full max-w-[340px]">
+            <motion.div key={member.name} variants={itemVariants} className="w-full max-w-[300px] sm:max-w-[340px]">
               <ProfileCard
                 name={member.name}
                 title={member.role}
@@ -114,6 +124,7 @@ export function Team() {
                 enableTilt={true}
                 behindGlowEnabled={true}
                 innerGradient="linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)"
+                avatarScale={member.avatarScale}
                 socials={member.socials}
               />
             </motion.div>
