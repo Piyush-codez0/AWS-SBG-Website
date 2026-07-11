@@ -16,7 +16,6 @@
 
   body {
     @apply font-body antialiased bg-bg text-text-primary;
-    font-feature-settings: "cv11", "ss01";
   }
 
   ::selection {
