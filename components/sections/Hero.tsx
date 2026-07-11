@@ -173,7 +173,7 @@ export function Hero() {
         variants={containerVariants}
         initial="hidden"
         animate="show"
-        className="relative mx-auto max-w-content px-6 py-24"
+        className="relative mx-auto max-w-content px-4 sm:px-6 py-16 md:py-24"
       >
         <div className="max-w-2xl">
           <motion.div
@@ -188,7 +188,7 @@ export function Hero() {
 
           <motion.h1
             variants={itemVariants}
-            className="font-display text-[44px] font-semibold leading-[1.08] tracking-tight text-text-primary sm:text-[56px] lg:text-[68px]"
+            className="font-display text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] font-semibold leading-[1.08] tracking-tight text-text-primary"
           >
             <FlipText duration={2.2}>Student builders,</FlipText>
             <br />
@@ -199,23 +199,23 @@ export function Hero() {
 
           <motion.p
             variants={itemVariants}
-            className="mt-5 max-w-lg text-[17px] leading-relaxed text-muted sm:text-lg"
+            className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[17px] leading-relaxed text-muted"
           >
             A community for students who&apos;d rather build than just read about it —
             workshops, hackathons, AWS credits, and a peer group that ships real
             projects together.
           </motion.p>
 
-          <motion.div variants={itemVariants} className="mt-9 flex flex-wrap items-center gap-3.5">
-            <Button size="lg" className="glow-primary">
+          <motion.div variants={itemVariants} className="mt-8 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+            <Button size="lg" className="glow-primary w-full sm:w-auto justify-center">
               Join Community
               <ArrowRight
                 size={16}
-                className="transition-transform duration-200 group-hover:translate-x-0.5"
+                className="ml-2 transition-transform duration-200 group-hover:translate-x-0.5"
               />
             </Button>
-            <Button size="lg" variant="secondary">
-              <CalendarDays size={16} />
+            <Button size="lg" variant="secondary" className="w-full sm:w-auto justify-center">
+              <CalendarDays size={16} className="mr-2" />
               Explore Events
             </Button>
           </motion.div>

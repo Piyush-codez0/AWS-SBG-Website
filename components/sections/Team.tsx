@@ -64,7 +64,7 @@ export function Team() {
         className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-primary/8 blur-[160px]"
       />
 
-      <div className="relative mx-auto max-w-content px-6 py-24 lg:py-32">
+      <div className="relative mx-auto max-w-content px-4 sm:px-6 py-16 md:py-24 lg:py-32">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -80,14 +80,14 @@ export function Team() {
           </motion.p>
           <motion.h2
             variants={itemVariants}
-            className="mt-4 font-display text-[36px] font-semibold leading-[1.1] tracking-tight text-text-primary sm:text-[44px]"
+            className="mt-4 font-display text-[32px] sm:text-[36px] md:text-[44px] font-semibold leading-[1.1] tracking-tight text-text-primary"
           >
             Builders behind the{" "}
             <span className="text-gradient">builders.</span>
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className="mt-5 max-w-lg text-[16px] leading-relaxed text-text-secondary mx-auto md:mx-0"
+            className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[16px] leading-relaxed text-text-secondary mx-auto md:mx-0"
           >
             Students who organise, teach, mentor, and keep the community
             running.
@@ -99,7 +99,7 @@ export function Team() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.1 }}
-          className="mt-20 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-items-center"
+          className="mt-14 sm:mt-20 grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-items-center"
         >
           {TEAM.map((member) => (
             <motion.div key={member.name} variants={itemVariants} className="w-full max-w-[340px]">

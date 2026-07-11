@@ -54,7 +54,7 @@ export function About() {
         className="pointer-events-none absolute left-1/4 top-0 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]"
       />
 
-      <div className="relative mx-auto max-w-content px-6 py-24 lg:py-32">
+      <div className="relative mx-auto max-w-content px-4 sm:px-6 py-16 md:py-24 lg:py-32">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -70,7 +70,7 @@ export function About() {
           </motion.p>
           <motion.h2
             variants={itemVariants}
-            className="mt-4 font-display text-[36px] font-semibold leading-[1.1] tracking-tight text-text-primary sm:text-[44px]"
+            className="mt-4 font-display text-[32px] sm:text-[36px] md:text-[44px] font-semibold leading-[1.1] tracking-tight text-text-primary"
           >
             We don&apos;t just learn cloud.
             <br />
@@ -78,7 +78,7 @@ export function About() {
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className="mt-5 max-w-lg text-[16px] leading-relaxed text-text-secondary"
+            className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[16px] leading-relaxed text-text-secondary"
           >
             AWS Student Builder Group is a community of makers who believe the
             best way to learn cloud is to build real projects, break things, and
@@ -99,7 +99,7 @@ export function About() {
               <motion.div
                 key={pillar.title}
                 variants={itemVariants}
-                className="group flex flex-col gap-4 bg-bg p-7 transition-colors duration-200 hover:bg-white/[0.02]"
+                className="group flex flex-col gap-4 relative bg-bg p-6 sm:p-8 md:p-10 transition-colors hover:bg-white/[0.02]"
               >
                 <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary-light transition-colors duration-200 group-hover:bg-primary/20">
                   <Icon size={20} strokeWidth={1.75} />

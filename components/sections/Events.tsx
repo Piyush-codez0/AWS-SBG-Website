@@ -74,7 +74,7 @@ export function Events() {
         className="pointer-events-none absolute right-0 top-1/3 h-[480px] w-[480px] translate-x-1/3 rounded-full bg-secondary/8 blur-[140px]"
       />
 
-      <div className="relative mx-auto max-w-content px-6 py-24 lg:py-32">
+      <div className="relative mx-auto max-w-content px-4 sm:px-6 py-16 md:py-24 lg:py-32">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -89,14 +89,14 @@ export function Events() {
           </motion.p>
           <motion.h2
             variants={itemVariants}
-            className="mt-4 font-display text-[36px] font-semibold leading-[1.1] tracking-tight text-text-primary sm:text-[44px]"
+            className="mt-4 font-display text-[32px] sm:text-[36px] md:text-[44px] font-semibold leading-[1.1] tracking-tight text-text-primary"
           >
             What&apos;s on the{" "}
             <span className="text-gradient">calendar.</span>
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className="mt-5 max-w-lg text-[16px] leading-relaxed text-text-secondary"
+            className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[16px] leading-relaxed text-text-secondary"
           >
             Workshops, hackathons, study jams, and build days — there&apos;s
             always something happening in the community.

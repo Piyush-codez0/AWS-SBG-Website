@@ -53,8 +53,8 @@ export function Footer() {
       />
       <div className="absolute inset-0 bg-noise opacity-[0.03] mix-blend-overlay pointer-events-none" />
 
-      <div className="relative mx-auto max-w-content px-6 pb-12 pt-20">
-        <div className="grid gap-16 lg:grid-cols-12">
+      <div className="relative mx-auto max-w-content px-4 sm:px-6 pb-12 pt-16 md:pt-20">
+        <div className="grid gap-12 lg:gap-16 lg:grid-cols-12">
           {/* Brand & Newsletter */}
           <div className="flex flex-col gap-8 lg:col-span-5">
             <div className="flex flex-col gap-4">
