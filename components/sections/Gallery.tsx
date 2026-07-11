@@ -1,41 +1,7 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
-
-const GALLERY_IMAGES = [
-  {
-    src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=640&h=420&fit=crop",
-    alt: "AWS SBG Workshop session with students coding together",
-    span: "sm:col-span-2 sm:row-span-2",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop",
-    alt: "Team collaboration during hackathon",
-    span: "",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&h=300&fit=crop",
-    alt: "Students presenting their cloud project",
-    span: "",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=300&fit=crop",
-    alt: "Group study session for AWS certification",
-    span: "",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=640&h=420&fit=crop",
-    alt: "AWS community event keynote speaker",
-    span: "sm:col-span-2",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop",
-    alt: "Brainstorming session with whiteboards",
-    span: "",
-  },
-];
 
 const containerVariants = {
   hidden: {},
@@ -51,6 +17,15 @@ const itemVariants = {
   },
 };
 
+const PLACEHOLDERS = [
+  { span: "sm:col-span-2 sm:row-span-2" },
+  { span: "" },
+  { span: "" },
+  { span: "" },
+  { span: "sm:col-span-2" },
+  { span: "" },
+];
+
 export function Gallery() {
   return (
     <section id="gallery" className="bg-grid bg-noise relative bg-bg">
@@ -59,7 +34,7 @@ export function Gallery() {
         className="pointer-events-none absolute left-0 bottom-1/4 h-[380px] w-[380px] -translate-x-1/3 rounded-full bg-secondary/8 blur-[120px]"
       />
 
-      <div className="relative mx-auto max-w-content px-6 py-24 lg:py-32">
+      <div className="relative mx-auto max-w-content px-4 sm:px-6 py-16 md:py-24 lg:py-32">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -69,11 +44,11 @@ export function Gallery() {
           <p className="text-[11px] uppercase tracking-[0.16em] text-muted">
             Gallery
           </p>
-          <h2 className="mt-4 font-display text-[36px] font-semibold leading-[1.1] tracking-tight text-text-primary sm:text-[44px]">
+          <h2 className="mt-4 font-display text-[32px] sm:text-[36px] md:text-[44px] font-semibold leading-[1.1] tracking-tight text-text-primary">
             Moments from the{" "}
             <span className="text-gradient">community.</span>
           </h2>
-          <p className="mt-5 max-w-lg text-[16px] leading-relaxed text-text-secondary">
+          <p className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[16px] leading-relaxed text-text-secondary">
             Workshops, hackathons, study jams, and celebrations — a look at
             what happens when builders get together.
           </p>
@@ -86,24 +61,15 @@ export function Gallery() {
           viewport={{ once: true, amount: 0.1 }}
           className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-3"
         >
-          {GALLERY_IMAGES.map((img) => (
+          {PLACEHOLDERS.map((item, i) => (
             <motion.div
-              key={img.alt}
+              key={i}
               variants={itemVariants}
-              className={`group relative overflow-hidden rounded-xl border border-border ${img.span}`}
+              className={`group relative overflow-hidden rounded-xl border border-border bg-white/[0.02] ${item.span}`}
             >
-              <div className="relative aspect-[4/3] w-full">
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                />
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <p className="absolute bottom-0 left-0 right-0 p-4 text-[13px] text-text-secondary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  {img.alt}
+              <div className="flex aspect-[4/3] w-full items-center justify-center">
+                <p className="text-[15px] font-medium tracking-wide text-muted">
+                  Coming Soon
                 </p>
               </div>
             </motion.div>
