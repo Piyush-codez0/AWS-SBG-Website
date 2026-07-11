@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Poppins, Geist } from "next/font/google";
+import { Space_Grotesk, Poppins } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -60,7 +58,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={cn(spaceGrotesk.variable, poppins.variable, "font-sans", geist.variable)}>
+    <html lang="en" className={cn(spaceGrotesk.variable, poppins.variable, "font-sans")}>
       <body>
         <Navbar />
         <main>{children}</main>

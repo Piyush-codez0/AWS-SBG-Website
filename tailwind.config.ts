@@ -42,6 +42,7 @@ const config: Config = {
         info: "#3B82F6",
       },
       fontFamily: {
+        sans: ["var(--font-poppins)", "sans-serif"],
         display: ["var(--font-space-grotesk)", "sans-serif"],
         body: ["var(--font-poppins)", "sans-serif"],
       },
