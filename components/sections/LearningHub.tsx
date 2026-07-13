@@ -86,13 +86,19 @@ const itemVariants = {
 
 export function LearningHub() {
   return (
-    <section id="learning-hub" className="bg-noise relative bg-bg-surface/30">
+    <section id="learning-hub" className="bg-grid bg-noise relative overflow-hidden bg-bg min-h-screen">
+      {/* Headline ambient glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/4 top-0 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]"
+      />
+      {/* Secondary glow */}
       <div
         aria-hidden
         className="pointer-events-none absolute right-1/4 bottom-0 h-[420px] w-[420px] translate-y-1/3 rounded-full bg-accent/6 blur-[130px]"
       />
 
-      <div className="relative mx-auto max-w-content px-4 sm:px-6 py-16 md:py-24 lg:py-32">
+      <div className="relative mx-auto max-w-content px-4 sm:px-6 pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-40 lg:pb-32">
         <motion.div
           variants={containerVariants}
           initial="hidden"

@@ -34,7 +34,7 @@
   perspective: 500px;
   transform: translate3d(0, 0, 0.1px);
   position: relative;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 .pc-behind {
@@ -488,6 +488,11 @@
     top: -8px;
   }
 
+  .pc-socials {
+    gap: 80px;
+    margin-top: 14px;
+  }
+
   .pc-user-info {
     --ui-inset: 15px;
     padding: 10px 12px;
@@ -542,7 +547,7 @@
   }
 
   .pc-socials {
-    gap: 12px;
+    gap: 90px;
     margin-top: 10px;
   }
 
@@ -593,6 +598,10 @@
 
   .pc-details p {
     font-size: 11px;
+  }
+
+  .pc-socials {
+    gap: 60px;
   }
 
   .pc-user-info {

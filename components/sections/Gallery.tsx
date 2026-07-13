@@ -28,13 +28,19 @@ const PLACEHOLDERS = [
 
 export function Gallery() {
   return (
-    <section id="gallery" className="bg-grid bg-noise relative bg-bg">
+    <section id="gallery" className="bg-grid bg-noise relative overflow-hidden bg-bg min-h-screen">
+      {/* Headline ambient glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/4 top-0 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]"
+      />
+      {/* Secondary glow */}
       <div
         aria-hidden
         className="pointer-events-none absolute left-0 bottom-1/4 h-[380px] w-[380px] -translate-x-1/3 rounded-full bg-secondary/8 blur-[120px]"
       />
 
-      <div className="relative mx-auto max-w-content px-4 sm:px-6 py-16 md:py-24 lg:py-32">
+      <div className="relative mx-auto max-w-content px-4 sm:px-6 pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-40 lg:pb-32">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}

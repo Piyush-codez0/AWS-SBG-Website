@@ -21,7 +21,6 @@ const FOOTER_LINKS = [
       { label: "Learning Hub", href: "/learning-hub" },
       { label: "AWS Skill Builder", href: "https://skillbuilder.aws" },
       { label: "AWS Educate", href: "https://aws.amazon.com/education/awseducate/" },
-      { label: "Cloud Resume Challenge", href: "https://cloudresumechallenge.dev" },
     ],
   },
   {
@@ -99,7 +98,7 @@ export function Footer() {
           {/* Link columns */}
           <div className="grid gap-8 sm:grid-cols-3 lg:col-span-7 lg:pl-10">
             {FOOTER_LINKS.map((col) => (
-              <div key={col.heading}>
+              <div key={col.heading} className={col.heading === "Connect" ? "hidden sm:block" : ""}>
                 <h4 className="font-display text-[15px] font-semibold text-text-primary">
                   {col.heading}
                 </h4>
@@ -156,7 +155,7 @@ export function Footer() {
           
           <div className="flex flex-col items-center gap-1.5 sm:items-end">
             <p className="text-[13px] text-muted">
-              © {new Date().getFullYear()} AWS SBG, Tula&apos;s Institute. All rights reserved.
+              © {new Date().getFullYear()} AWS SBG, Tula&apos;s University. All rights reserved.
             </p>
             
           </div>

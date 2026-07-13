@@ -22,17 +22,17 @@ const TEAM: Member[] = [
     name: "Piyush Lingwal",
     role: "Builder Group Leader",
     avatar: "/members/piyushlingwal.png",
-    handle: "piyushlingwal",
+    handle: "piyush-lingwal",
     status: "Building AI",
-    socials: { github: "https://github.com/", linkedin: "https://linkedin.com/" }
+    socials: { github: "https://github.com/piyush-lingwal/", linkedin: "https://linkedin.com/" }
   },
   {
     name: "Piyush Rawat",
     role: "Revealing soon...",
     avatar: "/members/piyushrawat.png",
-    handle: "piyushrawat",
+    handle: "Piyush-codez0",
     status: "Operating",
-    socials: { github: "https://github.com/", linkedin: "https://linkedin.com/" }
+    socials: { github: "https://github.com/Piyush-codez0/", linkedin: "https://linkedin.com/" }
   },
   {
     name: "Gaurav Shukla",
@@ -68,13 +68,13 @@ const itemVariants = {
 
 export function Team() {
   return (
-    <section id="team" className="bg-grid bg-noise relative bg-bg min-h-screen">
+    <section id="team" className="bg-grid bg-noise relative overflow-hidden bg-bg min-h-screen">
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-primary/8 blur-[160px]"
       />
 
-      <div className="relative mx-auto max-w-content px-4 sm:px-6 py-16 md:py-24 lg:py-32">
+      <div className="relative mx-auto max-w-content px-4 sm:px-6 pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-40 lg:pb-32">
         <motion.div
           variants={containerVariants}
           initial="hidden"

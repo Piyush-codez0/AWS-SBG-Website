@@ -50,7 +50,8 @@ export function Navbar() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="primary">Join Community</NavbarButton>
+            <NavbarButton variant="secondary" href="/login" className="hidden lg:inline-block">Login</NavbarButton>
+            <NavbarButton variant="primary" href="#">Join Community</NavbarButton>
           </div>
         </NavBody>
 
@@ -73,13 +74,22 @@ export function Navbar() {
                 key={`mobile-link-${idx}`}
                 href={item.link}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="relative text-text-secondary hover:text-text-primary"
+                className="relative w-full rounded-xl px-4 py-3 text-[15px] font-medium text-text-secondary transition-all duration-200 hover:bg-white/5 hover:text-text-primary active:scale-[0.98]"
               >
                 <span className="block">{item.name}</span>
               </a>
             ))}
-            <div className="flex w-full flex-col gap-4">
+            <div className="mt-2 flex w-full flex-col gap-3 border-t border-white/5 pt-3">
               <NavbarButton
+                href="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                variant="secondary"
+                className="w-full bg-white/5 border-white/10"
+              >
+                Login
+              </NavbarButton>
+              <NavbarButton
+                href="#"
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"
                 className="w-full"

@@ -47,14 +47,14 @@ const itemVariants = {
 
 export function About() {
   return (
-    <section id="about" className="bg-grid bg-noise relative bg-bg">
+    <section id="about" className="bg-grid bg-noise relative overflow-hidden bg-bg min-h-screen">
       {/* Ambient glow */}
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/4 top-0 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]"
       />
 
-      <div className="relative mx-auto max-w-content px-4 sm:px-6 py-16 md:py-24 lg:py-32">
+      <div className="relative mx-auto max-w-content px-4 sm:px-6 pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-40 lg:pb-32">
         <motion.div
           variants={containerVariants}
           initial="hidden"

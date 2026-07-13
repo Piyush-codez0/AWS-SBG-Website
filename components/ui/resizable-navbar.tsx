@@ -65,7 +65,7 @@ export const Navbar = ({ children, className }: NavbarProps) => {
   return (
     <motion.div
       // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
-      className={cn("sticky inset-x-0 top-20 z-40 w-full", className)}
+      className={cn("sticky inset-x-0 top-4 sm:top-6 lg:top-8 z-40 w-full", className)}
     >
       {React.Children.map(children, (child) =>
         React.isValidElement(child) && typeof child.type !== "string"
@@ -168,9 +168,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
         width: visible ? "90%" : "100%",
-        paddingRight: visible ? "12px" : "0px",
-        paddingLeft: visible ? "12px" : "0px",
-        borderRadius: visible ? "4px" : "2rem",
+        borderRadius: "9999px",
         y: visible ? 20 : 16,
       }}
       transition={{
@@ -179,10 +177,11 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         damping: 50,
       }}
       className={cn(
-        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden backdrop-blur-md",
-        visible && "bg-white/10 border border-white/10",
+        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between self-start rounded-full bg-white/5 border border-white/10 shadow-lg px-4 py-2 lg:hidden dark:bg-black/10 dark:border-white/10 backdrop-blur-[16px]",
+        visible && "bg-white/10 dark:bg-black/20",
         className,
       )}
+      style={{ overflow: "visible" }}
     >
       {React.Children.map(children, (child) =>
         React.isValidElement(child) && typeof child.type !== "string"
@@ -229,17 +228,34 @@ export const MobileNavMenu = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className={cn(
-            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-bg border border-white/10 px-4 py-8 shadow-xl",
-            className,
-          )}
-        >
-          {children}
-        </motion.div>
+        <>
+          {/* Blur Backdrop */}
+          <motion.div
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(4px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            transition={{ duration: 0.2 }}
+            onClick={onClose}
+            className="fixed inset-0 -z-10 h-[100dvh] w-screen bg-bg/40 sm:hidden"
+            style={{ pointerEvents: "auto" }}
+          />
+          
+          {/* Menu Container */}
+          <motion.div
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className={cn(
+              "absolute inset-x-0 top-[calc(100%+0.75rem)] z-50 flex w-full flex-col items-start justify-start gap-1 rounded-2xl bg-bg/95 backdrop-blur-xl border border-white/10 p-3 shadow-[0_8px_40px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.05)_inset]",
+              className,
+            )}
+          >
+            {/* Decorative top accent */}
+            <div className="mx-auto mb-2 h-[2px] w-12 rounded-full bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+            {children}
+          </motion.div>
+        </>
       )}
     </AnimatePresence>
   );
@@ -252,10 +268,36 @@ export const MobileNavToggle = ({
   isOpen: boolean;
   onClick: () => void;
 }) => {
-  return isOpen ? (
-    <IconX className="text-text-primary" onClick={onClick} />
-  ) : (
-    <IconMenu2 className="text-text-primary" onClick={onClick} />
+  return (
+    <button
+      onClick={onClick}
+      className="relative z-20 flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200 hover:bg-white/10 active:scale-90"
+      aria-label={isOpen ? "Close menu" : "Open menu"}
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        {isOpen ? (
+          <motion.div
+            key="close"
+            initial={{ opacity: 0, rotate: -90 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            exit={{ opacity: 0, rotate: 90 }}
+            transition={{ duration: 0.15 }}
+          >
+            <IconX size={20} className="text-text-primary" />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="menu"
+            initial={{ opacity: 0, rotate: 90 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            exit={{ opacity: 0, rotate: -90 }}
+            transition={{ duration: 0.15 }}
+          >
+            <IconMenu2 size={20} className="text-text-primary" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </button>
   );
 };
 
@@ -279,11 +321,18 @@ export const NavbarLogo = ({ visible }: { visible?: boolean }) => {
           exit={{ opacity: 0, x: -10 }}
           className="flex flex-col"
         >
-          <span className="font-bold tracking-wide text-text-primary text-[12px] leading-tight">
+          {/* Full name on desktop, abbreviated on mobile */}
+          <span className="font-bold tracking-wide text-text-primary text-[12px] leading-tight hidden sm:block">
             AWS STUDENT BUILDER GROUP
           </span>
-          <span className="text-text-secondary text-[10px] leading-tight">
+          <span className="font-bold tracking-wide text-text-primary text-[12px] leading-tight sm:hidden">
+            AWS Student Builders Group
+          </span>
+          <span className="text-text-secondary text-[10px] leading-tight hidden sm:block">
             at Tula's University Dehradun
+          </span>
+          <span className="text-text-secondary text-[9px] leading-tight sm:hidden">
+            Tula&apos;s University
           </span>
         </motion.div>
       )}
