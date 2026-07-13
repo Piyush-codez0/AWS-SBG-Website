@@ -9,7 +9,8 @@ const CurvedLoop = ({
   className = '',
   curveAmount = 400,
   direction = 'left',
-  interactive = true
+  interactive = true,
+  circular = false,
 }) => {
   const text = useMemo(() => {
     const hasTrailing = /\s|\u00A0$/.test(marqueeText);
@@ -23,7 +24,13 @@ const CurvedLoop = ({
   const [offset, setOffset] = useState(0);
   const uid = useId();
   const pathId = `curve-${uid}`;
-  const pathD = `M-100,40 Q500,${40 + curveAmount} 1540,40`;
+  // Circular: radius 120 inside a 300×300 viewBox, centred at 150,150
+  const circleR = 120;
+  const pathD = circular
+    ? `M 150,150 m -${circleR},0 a ${circleR},${circleR} 0 1,1 ${
+        circleR * 2
+      },0 a ${circleR},${circleR} 0 1,1 -${circleR * 2},0`
+    : `M-100,40 Q500,${40 + curveAmount} 1540,40`;
 
   const dragRef = useRef(false);
   const lastXRef = useRef(0);
@@ -108,14 +115,17 @@ const CurvedLoop = ({
 
   return (
     <div
-      className="curved-loop-jacket"
+      className={`curved-loop-jacket${circular ? ' curved-loop-circular' : ''}`}
       style={{ visibility: ready ? 'visible' : 'hidden', cursor: cursorStyle }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
       onPointerLeave={endDrag}
     >
-      <svg className="curved-loop-svg" viewBox="0 0 1440 120">
+      <svg
+        className={`curved-loop-svg${circular ? ' curved-loop-circular-svg' : ''}`}
+        viewBox={circular ? '0 0 300 300' : '0 0 1440 120'}
+      >
         <text ref={measureRef} xmlSpace="preserve" style={{ visibility: 'hidden', opacity: 0, pointerEvents: 'none' }}>
           {text}
         </text>
