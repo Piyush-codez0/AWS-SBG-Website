@@ -50,7 +50,6 @@ export function Navbar() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="secondary" href="/login" className="hidden lg:inline-block">Login</NavbarButton>
             <NavbarButton variant="primary" href="#">Join Community</NavbarButton>
           </div>
         </NavBody>
@@ -80,14 +79,6 @@ export function Navbar() {
               </a>
             ))}
             <div className="mt-2 flex w-full flex-col gap-3 border-t border-white/5 pt-3">
-              <NavbarButton
-                href="/login"
-                onClick={() => setIsMobileMenuOpen(false)}
-                variant="secondary"
-                className="w-full bg-white/5 border-white/10"
-              >
-                Login
-              </NavbarButton>
               <NavbarButton
                 href="#"
                 onClick={() => setIsMobileMenuOpen(false)}
