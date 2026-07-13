@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Github, Linkedin, Twitter, Instagram, Mail, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import CurvedLoop from "@/components/ui/CurvedLoop";
 
 const FOOTER_LINKS = [
   {
@@ -97,57 +96,43 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Link columns + CurvedLoop */}
-          <div className="flex flex-col gap-10 lg:col-span-7 lg:pl-10">
-            <div className="grid gap-8 sm:grid-cols-3">
-              {FOOTER_LINKS.map((col) => (
-                <div key={col.heading}>
-                  <h4 className="font-display text-[15px] font-semibold text-text-primary">
-                    {col.heading}
-                  </h4>
-                  <ul className="mt-5 flex flex-col gap-3.5">
-                    {col.links.map((link) => {
-                      const isExternal = link.href.startsWith("http") || link.href.startsWith("mailto");
-                      return (
-                        <li key={link.label}>
-                          {isExternal ? (
-                            <a
-                              href={link.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="group flex w-fit items-center gap-1.5 text-[14px] text-text-secondary transition-colors hover:text-primary-light"
-                            >
-                              {link.label}
-                              <ArrowRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100" />
-                            </a>
-                          ) : (
-                            <Link
-                              href={link.href}
-                              className="group flex w-fit items-center gap-1.5 text-[14px] text-text-secondary transition-colors hover:text-primary-light"
-                            >
-                              {link.label}
-                              <ArrowRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100" />
-                            </Link>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              ))}
-            </div>
-
-            {/* CurvedLoop marquee */}
-            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm overflow-hidden py-2">
-              <CurvedLoop
-                marqueeText="AWS ✦ STUDENT ✦ BUILDER ✦ GROUP ✦ TULA'S ✦ "
-                speed={0.8}
-                curveAmount={40}
-                direction="left"
-                interactive={true}
-                className="fill-primary/60 text-[15px] font-semibold tracking-widest uppercase"
-              />
-            </div>
+          {/* Link columns */}
+          <div className="grid gap-8 sm:grid-cols-3 lg:col-span-7 lg:pl-10">
+            {FOOTER_LINKS.map((col) => (
+              <div key={col.heading}>
+                <h4 className="font-display text-[15px] font-semibold text-text-primary">
+                  {col.heading}
+                </h4>
+                <ul className="mt-5 flex flex-col gap-3.5">
+                  {col.links.map((link) => {
+                    const isExternal = link.href.startsWith("http") || link.href.startsWith("mailto");
+                    return (
+                      <li key={link.label}>
+                        {isExternal ? (
+                          <a
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex w-fit items-center gap-1.5 text-[14px] text-text-secondary transition-colors hover:text-primary-light"
+                          >
+                            {link.label}
+                            <ArrowRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100" />
+                          </a>
+                        ) : (
+                          <Link
+                            href={link.href}
+                            className="group flex w-fit items-center gap-1.5 text-[14px] text-text-secondary transition-colors hover:text-primary-light"
+                          >
+                            {link.label}
+                            <ArrowRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100" />
+                          </Link>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 
