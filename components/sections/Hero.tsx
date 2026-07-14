@@ -1,9 +1,11 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, CalendarDays } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button, buttonVariants } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
 import LightRays from "@/components/ui/LightRays";
 import { FlipText } from "@/components/ui/flip-text";
 
@@ -190,10 +192,10 @@ export function Hero() {
             variants={itemVariants}
             className="font-display text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] font-semibold leading-[1.08] tracking-tight text-text-primary"
           >
-            <FlipText duration={2.2}>AWS Student Builders</FlipText>
+            <FlipText duration={2.2}>Student builders,</FlipText>
             <br />
             <span className="text-gradient">
-              at Tula's University.
+              Learn. Build. Deploy. Together.
             </span>
           </motion.h1>
 
@@ -201,21 +203,28 @@ export function Hero() {
             variants={itemVariants}
             className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[17px] leading-relaxed text-muted"
           >
-            The official AWS Cloud Club in Dehradun for students who'd rather build than just read about it. Join our community for hands-on workshops, hackathons, AWS credits, and a peer group that ships real cloud projects together.
+            A community for students who&apos;d rather build than just read about it —
+            workshops, hackathons, AWS credits, and a peer group that ships real
+            projects together.
           </motion.p>
 
           <motion.div variants={itemVariants} className="mt-8 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
-            <Button size="lg" className="glow-primary w-full sm:w-auto justify-center">
+            <a
+              href="https://www.meetup.com/aws-sbg-at-tulas-institute/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ size: "lg" }), "glow-primary w-full sm:w-auto justify-center")}
+            >
               Join Community
               <ArrowRight
                 size={16}
                 className="ml-2 transition-transform duration-200 group-hover:translate-x-0.5"
               />
-            </Button>
-            <Button size="lg" variant="secondary" className="w-full sm:w-auto justify-center">
-              <CalendarDays size={16} className="mr-2" />
+            </a>
+            <Link href="/events" className={cn(buttonVariants({ size: "lg", variant: "secondary" }), "group w-full sm:w-auto justify-center transition-all hover:bg-white/[0.08]")}>
+              <CalendarDays size={16} className="mr-2 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:text-primary-light" />
               Explore Events
-            </Button>
+            </Link>
           </motion.div>
         </div>
       </motion.div>

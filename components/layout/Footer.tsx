@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Github, Linkedin, Twitter, Instagram, Mail, ArrowRight } from "lucide-react";
+import { Linkedin, Instagram, Mail, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { subscribeToNewsletter } from "@/app/actions/newsletter";
 
 const FOOTER_LINKS = [
   {
@@ -34,15 +36,50 @@ const FOOTER_LINKS = [
   },
 ];
 
+const MeetupIcon = ({ size = 24, className = "", ...props }: any) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    {...props}
+  >
+    <path d="M21.16 11.23c-1.35-1.92-3.13-2.61-4.81-2.07-1 .31-1.74 1.07-2.18 1.96a4.29 4.29 0 0 0-4.04-1.96c-1.63.15-2.85 1.15-3.4 2.45-.19-.4-.44-.76-.78-1.07-1.12-1.07-2.6-1.11-3.6-.1-1.03 1.03-1.07 2.62.1 3.73.54.51 1.25.75 1.95.73-1.03 1.05-1 2.7.07 3.76 1.05 1.03 2.72 1.02 3.78-.05.57-.57.88-1.32.93-2.1.84.58 1.83.74 2.7.53 1.1-.28 2.05-1 2.62-1.94 1.16 1.54 3.03 1.95 4.67 1.06 1.7-.93 2.37-3.04 1.99-4.93z"/>
+  </svg>
+);
+
 const SOCIALS = [
-  { icon: Github, href: "#", label: "GitHub" },
+  { icon: MeetupIcon, href: "https://www.meetup.com/aws-sbg-at-tulas-institute/", label: "Meetup" },
   { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Twitter, href: "#", label: "Twitter" },
   { icon: Instagram, href: "#", label: "Instagram" },
   { icon: Mail, href: "mailto:awssbg@tulas.edu.in", label: "Email" },
 ];
 
 export function Footer() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    
+    setStatus("loading");
+    setErrorMessage("");
+    
+    const result = await subscribeToNewsletter(email);
+    
+    if (result.success) {
+      setStatus("success");
+      setEmail("");
+    } else {
+      setStatus("error");
+      setErrorMessage(result.error || "Something went wrong.");
+    }
+  };
+
   return (
     <footer className="relative border-t border-white/[0.05] bg-bg overflow-hidden">
       {/* Decorative gradient blur */}
@@ -78,20 +115,51 @@ export function Footer() {
             </div>
 
             {/* Newsletter Subscription */}
-            <div className="flex flex-col gap-3 rounded-2xl border border-white/[0.05] bg-white/[0.02] p-5 backdrop-blur-sm">
+            <div className="flex flex-col gap-3 rounded-2xl border border-white/[0.05] bg-white/[0.02] p-5 backdrop-blur-sm mt-2">
               <h4 className="text-sm font-medium text-text-primary">Join our newsletter</h4>
-              <p className="text-[13px] text-text-secondary">Get updates on upcoming workshops and hackathons.</p>
-              <form className="mt-1 flex items-center gap-2" onSubmit={(e) => e.preventDefault()}>
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="w-full flex-1 rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-text-primary outline-none transition-colors placeholder:text-muted focus:border-primary/50 focus:bg-black/40"
-                  required
-                />
-                <Button size="sm" className="bg-white text-black hover:bg-white/90 shrink-0">
-                  Subscribe
-                </Button>
-              </form>
+              <p className="text-[13px] text-text-secondary leading-relaxed max-w-[320px]">
+                Get updates on upcoming workshops, cloud events, and hackathons straight to your inbox.
+              </p>
+              {status === "success" ? (
+                <div className="mt-2 flex items-center gap-2 rounded-xl bg-green-500/10 px-4 py-3 text-sm text-green-400 border border-green-500/20">
+                  <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-500/20">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  Thanks for subscribing!
+                </div>
+              ) : (
+                <form className="mt-2 relative flex flex-col max-w-[360px]" onSubmit={handleSubscribe}>
+                  <div className="relative flex items-center">
+                    <Mail className="absolute left-3.5 h-4 w-4 text-muted" />
+                    <input 
+                      type="email" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={status === "loading"}
+                      placeholder="Enter your email address" 
+                      className="w-full rounded-full border border-white/10 bg-white/[0.02] py-2.5 pl-10 pr-[110px] text-sm text-text-primary outline-none transition-all placeholder:text-muted focus:border-primary/50 focus:bg-white/[0.05] focus:ring-1 focus:ring-primary/50 disabled:opacity-50"
+                      required
+                    />
+                    <Button 
+                      size="sm" 
+                      disabled={status === "loading"}
+                      className="absolute right-1 top-1 bottom-1 h-auto rounded-full bg-primary text-white hover:bg-primary/90 shrink-0 group px-4 font-medium disabled:opacity-70"
+                    >
+                      {status === "loading" ? (
+                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+                      ) : (
+                        <>
+                          Subscribe
+                          <ArrowRight className="ml-1.5 h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  {status === "error" && (
+                    <p className="mt-2 text-xs text-red-400 pl-2">{errorMessage}</p>
+                  )}
+                </form>
+              )}
             </div>
           </div>
 
