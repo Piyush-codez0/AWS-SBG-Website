@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  
+  outputFileTracing: false,
 
   poweredByHeader: false,
 
