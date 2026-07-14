@@ -1,12 +1,19 @@
-import CelestialBloomShader from "@/components/ui/celestial-bloom-shader";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Demo",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function DemoOne() {
   return (
     <div className="app-container">
-      <CelestialBloomShader />
       <div className="content-overlay">
-        <h1>Celestial Bloom</h1>
-        <p>A Procedural Shader Animation</p>
+        <h1>Demo</h1>
+        <p>Work in progress.</p>
       </div>
     </div>
   );

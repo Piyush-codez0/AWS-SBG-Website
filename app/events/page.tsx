@@ -4,7 +4,10 @@ import { Events } from "@/components/sections/Events";
 export const metadata: Metadata = {
   title: "Events",
   description:
-    "Upcoming workshops, hackathons, study jams, and build days from the AWS Student Builder Group.",
+    "Upcoming AWS workshops, hackathons, study jams, and build days from the AWS Student Builders Group at Tula's University, Dehradun.",
+  alternates: {
+    canonical: "/events",
+  },
 };
 
 export default function EventsPage() {

@@ -190,10 +190,10 @@ export function Hero() {
             variants={itemVariants}
             className="font-display text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] font-semibold leading-[1.08] tracking-tight text-text-primary"
           >
-            <FlipText duration={2.2}>Student builders,</FlipText>
+            <FlipText duration={2.2}>AWS Student Builders</FlipText>
             <br />
             <span className="text-gradient">
-              Learn. Build. Deploy. Together.
+              at Tula's University.
             </span>
           </motion.h1>
 
@@ -201,9 +201,7 @@ export function Hero() {
             variants={itemVariants}
             className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[17px] leading-relaxed text-muted"
           >
-            A community for students who&apos;d rather build than just read about it —
-            workshops, hackathons, AWS credits, and a peer group that ships real
-            projects together.
+            The official AWS Cloud Club in Dehradun for students who'd rather build than just read about it. Join our community for hands-on workshops, hackathons, AWS credits, and a peer group that ships real cloud projects together.
           </motion.p>
 
           <motion.div variants={itemVariants} className="mt-8 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">

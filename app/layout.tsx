@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/seo/JsonLd";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -12,39 +13,121 @@ const poppins = Poppins({
   display: "swap",
 });
 
-const siteUrl = "https://sbg.yourcollege.edu";
+const siteUrl = "https://aws-sbg-tulas.vercel.app";
+const siteName =
+  "AWS Student Builders Group at Tula's University | Official AWS Cloud Community";
+const siteDescription =
+  "Official website of AWS Student Builders Group at Tula's University, Dehradun. Join workshops, cloud events, hackathons, AWS learning programs, technical communities, and student innovation initiatives.";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#09090B" },
+    { media: "(prefers-color-scheme: light)", color: "#09090B" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+
   title: {
-    default: "AWS Student Builder Group",
-    template: "%s · AWS Student Builder Group",
+    default: siteName,
+    template: "%s | AWS Student Builders Group — Tula's University",
   },
-  description:
-    "The official AWS Student Builder Group — a community of student builders learning cloud, AI, and software through hands-on projects, workshops, and mentorship.",
+
+  description: siteDescription,
+
   keywords: [
-    "AWS Student Builder Group",
+    "AWS Student Builders Group",
+    "AWS SBG",
+    "AWS SBG Tulas",
+    "AWS SBG Dehradun",
+    "AWS Student Builders Group Tula's University",
     "AWS Cloud Club",
-    "student developer community",
-    "cloud computing",
-    "AWS certifications",
-    "hackathons",
+    "Cloud Computing",
+    "AWS Community",
+    "Student Builders Group",
+    "Tula's University",
+    "Dehradun",
+    "AWS Workshops",
+    "AWS Events",
+    "AWS Cloud",
+    "AWS Certifications",
+    "Student Developer Community",
+    "Hackathons",
+    "Cloud Learning",
+    "AWS Student Community Dehradun",
   ],
-  openGraph: {
-    title: "AWS Student Builder Group",
-    description:
-      "A community of student builders learning cloud, AI, and software through hands-on projects, workshops, and mentorship.",
-    url: siteUrl,
-    siteName: "AWS Student Builder Group",
-    type: "website",
+
+  applicationName: "AWS Student Builders Group",
+  creator: "AWS Student Builders Group at Tula's University",
+  publisher: "AWS Student Builders Group",
+  category: "Education",
+  referrer: "origin-when-cross-origin",
+
+  alternates: {
+    canonical: "/",
   },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
+  openGraph: {
+    title: siteName,
+    description: siteDescription,
+    url: siteUrl,
+    siteName: "AWS Student Builders Group",
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "AWS Student Builders Group at Tula's University",
+      },
+    ],
+  },
+
   twitter: {
     card: "summary_large_image",
-    title: "AWS Student Builder Group",
-    description:
-      "A community of student builders learning cloud, AI, and software through hands-on projects, workshops, and mentorship.",
+    title: siteName,
+    description: siteDescription,
+    images: ["/opengraph-image.png"],
   },
-  robots: { index: true, follow: true },
+
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icon.png", type: "image/png" },
+    ],
+  },
+
+  manifest: "/manifest.webmanifest",
+
+  verification: {
+    google: "GOOGLE_SEARCH_CONSOLE_VERIFICATION_CODE",
+    // yandex: "YANDEX_VERIFICATION_CODE",
+    // other: { "msvalidate.01": "BING_VERIFICATION_CODE" },
+  },
+
+  other: {
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "apple-mobile-web-app-title": "AWS SBG",
+  },
 };
 
 export default function RootLayout({
@@ -52,6 +135,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={cn(poppins.variable, "font-sans")}>
+      <head>
+        <OrganizationJsonLd />
+        <WebSiteJsonLd />
+      </head>
       <body>
         <Navbar />
         <main>{children}</main>

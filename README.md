@@ -25,7 +25,6 @@
 - [Tech Stack](#-tech-stack)
 - [Design System](#-design-system)
 - [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
 - [Accessibility and Performance](#-accessibility-and-performance)
 - [Contributing](#-contributing)
 - [License](#-license)
@@ -143,36 +142,6 @@ public/
 └── Members/                  # Team member photos
 ```
 
-</details>
-
-## 🚀 Getting Started
-
-**Prerequisites:** Node.js 18.18+ and npm
-
-```bash
-# Clone the repo
-git clone https://github.com/Piyush-codez0/AWS-SBG-Website.git
-cd AWS-SBG-Website
-
-# Install dependencies
-npm install
-
-# Run the dev server
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view it.
-
-<details>
-<summary><strong>Other scripts</strong></summary>
-
-```bash
-npm run build   # Production build
-npm run start   # Serve the production build
-npm run lint    # Lint the codebase
-```
-
-</details>
 
 ## ♿ Accessibility and Performance
 
@@ -183,7 +152,7 @@ npm run lint    # Lint the codebase
 
 ## 🤝 Contributing
 
-This project is maintained by the AWS Student Builder Group core team at Tula's Institute. Issues and pull requests from members are welcome — please keep new sections self-contained (one component per section) and follow the existing token-based styling approach rather than hardcoded values.
+This project is maintained by the AWS Student Builder Group core team at Tula's University. Issues and pull requests from members are welcome — please keep new sections self-contained (one component per section) and follow the existing token-based styling approach rather than hardcoded values.
 
 ## 📄 License
 
@@ -193,7 +162,7 @@ This project currently has no explicit license. Contact the maintainer before re
 
 <div align="center">
 
-Built with ☕ and Next.js by the **AWS Student Builder Group**, Tula's Institute, Dehradun.
+Built with ☕ and Next.js by the **AWS Student Builder Group**, Tula's University, Dehradun.
 
 [⬆ Back to top](#readme-top)
 
