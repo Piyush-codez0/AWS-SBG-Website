@@ -54,6 +54,7 @@ const config: Config = {
         "float-slower": "float 13s ease-in-out infinite",
         "spin-slow": "spin 40s linear infinite",
         "pulse-dot": "pulse-dot 2s ease-in-out infinite",
+        "shimmer": "shimmer 2.5s infinite linear",
       },
       keyframes: {
         float: {
@@ -63,6 +64,10 @@ const config: Config = {
         "pulse-dot": {
           "0%, 100%": { opacity: "1", transform: "scale(1)" },
           "50%": { opacity: "0.5", transform: "scale(0.85)" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "200% 0" },
+          "100%": { backgroundPosition: "-200% 0" },
         },
       },
     },

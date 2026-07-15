@@ -1,8 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "framer-motion";
 import { CalendarDays, MapPin, ArrowUpRight } from "lucide-react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type Event = {
   title: string;
@@ -52,23 +56,46 @@ const UPCOMING_EVENTS: Event[] = [
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 18 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
-  },
-};
-
 export function Events() {
+  const containerRef = React.useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    // Header reveal
+    gsap.from(".events-header-el", {
+      opacity: 0,
+      y: 20,
+      stagger: 0.1,
+      duration: 0.6,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".events-header-container",
+        start: "top 85%",
+      },
+    });
+
+    // Event cards reveal
+    gsap.from(".event-card", {
+      opacity: 0,
+      y: 30,
+      stagger: 0.1,
+      duration: 0.7,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".events-list-container",
+        start: "top 85%",
+      },
+    });
+
+    // Refresh ScrollTrigger to calculate offsets correctly after DOM is fully laid out
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
+
+    return () => clearTimeout(refreshTimer);
+  }, { scope: containerRef });
+
   return (
-    <section id="events" className="bg-grid bg-noise relative overflow-hidden bg-bg min-h-screen">
+    <section ref={containerRef} id="events" className="bg-grid bg-noise relative overflow-hidden bg-bg min-h-screen">
       {/* Headline ambient glow */}
       <div
         aria-hidden
@@ -81,80 +108,68 @@ export function Events() {
       />
 
       <div className="relative mx-auto max-w-content px-4 sm:px-6 pt-28 pb-16 md:pt-32 md:pb-24 lg:pt-32 lg:pb-32">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <motion.p
-            variants={itemVariants}
-            className="text-[11px] uppercase tracking-[0.16em] text-muted"
-          >
+        <div className="events-header-container">
+          <p className="events-header-el text-[11px] uppercase tracking-[0.16em] text-muted">
             Upcoming Events
-          </motion.p>
-          <motion.h2
-            variants={itemVariants}
-            className="mt-4 font-display text-[32px] sm:text-[36px] md:text-[44px] font-semibold leading-[1.1] tracking-tight text-text-primary"
-          >
+          </p>
+          <h2 className="events-header-el mt-4 font-display text-[32px] sm:text-[36px] md:text-[44px] font-semibold leading-[1.1] tracking-tight text-text-primary">
             What&apos;s on the{" "}
-            <span className="text-gradient">calendar.</span>
-          </motion.h2>
-          <motion.p
-            variants={itemVariants}
-            className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[16px] leading-relaxed text-text-secondary"
-          >
+            <span className="text-gradient">schedule.</span>
+          </h2>
+          <p className="events-header-el mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[16px] leading-relaxed text-text-secondary">
             Workshops, hackathons, study jams, and build days — there&apos;s
             always something happening in the community.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.15 }}
-          className="mt-14 grid gap-4 sm:grid-cols-2"
-        >
-          {UPCOMING_EVENTS.map((event) => (
-            <motion.article
-              key={event.title}
-              variants={itemVariants}
-              className="group relative flex flex-col gap-4 rounded-xl border border-border bg-bg-surface/40 p-6 transition-all duration-300 hover:border-primary-light/30 hover:bg-white/[0.02]"
+        <div className="events-list-container mt-16 flex flex-col gap-4">
+          {UPCOMING_EVENTS.map((event, idx) => (
+            <div
+              key={idx}
+              className="event-card group relative overflow-hidden rounded-xl border border-border bg-border/40 transition-colors hover:bg-border/60 sm:p-px"
             >
-              <div className="flex items-center justify-between">
-                <span
-                  className={`rounded-full px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider ${event.tagColor}`}
-                >
-                  {event.tag}
-                </span>
-                <ArrowUpRight
-                  size={16}
-                  className="text-muted transition-all duration-200 group-hover:text-primary-light group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                />
+              {/* Inner card content (handles the 1px border gradient on hover) */}
+              <div className="relative flex flex-col sm:flex-row h-full w-full justify-between gap-6 sm:gap-8 rounded-[11px] bg-bg p-6 sm:p-8">
+                {/* Left col: Date & Location */}
+                <div className="flex shrink-0 flex-col justify-between sm:w-48 lg:w-56">
+                  <div>
+                    <span className="inline-flex rounded bg-white/[0.04] px-2.5 py-1 text-[12px] font-medium text-text-secondary ring-1 ring-inset ring-white/10">
+                      {event.date}
+                    </span>
+                  </div>
+                  <div className="mt-6 sm:mt-0 flex items-start gap-2 text-[13px] text-muted">
+                    <MapPin size={16} className="shrink-0 text-text-secondary" />
+                    <span>{event.location}</span>
+                  </div>
+                </div>
+
+                {/* Right col: Details */}
+                <div className="flex flex-1 flex-col">
+                  <div className="flex items-center gap-3">
+                    <span
+                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium tracking-wide ${event.tagColor}`}
+                    >
+                      {event.tag}
+                    </span>
+                  </div>
+                  <h3 className="mt-3 font-display text-[20px] font-semibold text-text-primary transition-colors group-hover:text-primary-light">
+                    {event.title}
+                  </h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-text-secondary max-w-2xl">
+                    {event.description}
+                  </p>
+                </div>
+
+                {/* Arrow Icon */}
+                <div className="absolute right-6 top-6 sm:relative sm:right-auto sm:top-auto flex items-start">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white/[0.02] text-text-secondary transition-all duration-300 group-hover:bg-primary group-hover:border-primary group-hover:text-white group-hover:rotate-45">
+                    <ArrowUpRight size={18} />
+                  </div>
+                </div>
               </div>
-
-              <h3 className="font-display text-lg font-semibold tracking-tight text-text-primary">
-                {event.title}
-              </h3>
-
-              <p className="text-sm leading-relaxed text-text-secondary">
-                {event.description}
-              </p>
-
-              <div className="mt-auto flex flex-wrap items-center gap-4 border-t border-border pt-4 text-[13px] text-muted">
-                <span className="flex items-center gap-1.5">
-                  <CalendarDays size={14} />
-                  {event.date}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <MapPin size={14} />
-                  {event.location}
-                </span>
-              </div>
-            </motion.article>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

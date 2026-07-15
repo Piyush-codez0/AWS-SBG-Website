@@ -35,6 +35,8 @@
   transform: translate3d(0, 0, 0.1px);
   position: relative;
   touch-action: pan-y;
+  display: flex;
+  justify-content: center;
 }
 
 .pc-behind {
@@ -462,13 +464,17 @@
 @media (max-width: 768px) {
   .pc-card {
     height: auto;
-    max-height: 360px;
-    min-height: 260px;
-    aspect-ratio: 0.8;
+    max-height: 440px;
+    min-height: 320px;
+    aspect-ratio: 0.75;
   }
 
   .pc-card-wrapper {
     perspective: 400px;
+  }
+
+  .pc-avatar-content .avatar {
+    transform: translateX(-50%) translateZ(0) !important;
   }
 
   :root {
@@ -524,9 +530,9 @@
 @media (max-width: 480px) {
   .pc-card {
     height: auto;
-    max-height: 320px;
-    min-height: 240px;
-    aspect-ratio: 0.82;
+    max-height: 400px;
+    min-height: 300px;
+    aspect-ratio: 0.76;
   }
 
   :root {

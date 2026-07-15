@@ -130,6 +130,8 @@ export const metadata: Metadata = {
   },
 };
 
+import SmoothScroll from "@/components/layout/SmoothScroll";
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -140,9 +142,11 @@ export default function RootLayout({
         <WebSiteJsonLd />
       </head>
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <SmoothScroll>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );

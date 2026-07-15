@@ -16,6 +16,7 @@
 
   body {
     @apply font-body antialiased bg-bg text-text-primary;
+    overflow-x: hidden;
   }
 
   ::selection {

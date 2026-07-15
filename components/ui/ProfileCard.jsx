@@ -364,7 +364,7 @@ const ProfileCardComponent = ({
               )}
             </div>
             <div className="pc-content">
-              <div className={`pc-details ${(!avatarUrl || avatarUrl === "") ? 'pc-details-centered' : ''}`}>
+              <div className="pc-details">
                 <h3>{name}</h3>
                 <p>{title}</p>
                 {socials && (

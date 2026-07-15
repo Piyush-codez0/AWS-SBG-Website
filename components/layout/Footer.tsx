@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Linkedin, Instagram, Mail, ArrowRight } from "lucide-react";
+import { Linkedin, Instagram, Mail, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { subscribeToNewsletter } from "@/app/actions/newsletter";
 
@@ -115,8 +115,14 @@ export function Footer() {
             </div>
 
             {/* Newsletter Subscription */}
-            <div className="flex flex-col gap-3 rounded-2xl border border-white/[0.05] bg-white/[0.02] p-5 backdrop-blur-sm mt-2">
-              <h4 className="text-sm font-medium text-text-primary">Join our newsletter</h4>
+            <div className="relative overflow-hidden flex flex-col gap-3 rounded-2xl border border-white/[0.05] bg-white/[0.02] p-5 backdrop-blur-sm mt-2 hover:border-primary/20 hover:bg-white/[0.04] transition-all duration-300 group/card">
+              {/* Top accent glow line */}
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+              
+              <h4 className="text-sm font-medium text-text-primary flex items-center gap-2">
+                <Sparkles size={14} className="text-accent animate-pulse" />
+                Join our newsletter
+              </h4>
               <p className="text-[13px] text-text-secondary leading-relaxed max-w-[320px]">
                 Get updates on upcoming workshops, cloud events, and hackathons straight to your inbox.
               </p>
@@ -129,21 +135,23 @@ export function Footer() {
                 </div>
               ) : (
                 <form className="mt-2 relative flex flex-col max-w-[360px]" onSubmit={handleSubscribe}>
-                  <div className="relative flex items-center">
-                    <Mail className="absolute left-3.5 h-4 w-4 text-muted" />
-                    <input 
-                      type="email" 
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      disabled={status === "loading"}
-                      placeholder="Enter your email address" 
-                      className="w-full rounded-full border border-white/10 bg-white/[0.02] py-2.5 pl-10 pr-[110px] text-sm text-text-primary outline-none transition-all placeholder:text-muted focus:border-primary/50 focus:bg-white/[0.05] focus:ring-1 focus:ring-primary/50 disabled:opacity-50"
-                      required
-                    />
+                  <div className="relative flex flex-col sm:flex-row sm:items-center">
+                    <div className="relative w-full">
+                      <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted" />
+                      <input 
+                        type="email" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        disabled={status === "loading"}
+                        placeholder="Enter your email address" 
+                        className="w-full rounded-2xl sm:rounded-full border border-white/10 bg-white/[0.02] py-3 pl-10 pr-4 sm:pr-[115px] text-sm text-text-primary outline-none transition-all placeholder:text-muted focus:border-primary/50 focus:bg-white/[0.05] focus:ring-1 focus:ring-primary/50 disabled:opacity-50"
+                        required
+                      />
+                    </div>
                     <Button 
                       size="sm" 
                       disabled={status === "loading"}
-                      className="absolute right-1 top-1 bottom-1 h-auto rounded-full bg-primary text-white hover:bg-primary/90 shrink-0 group px-4 font-medium disabled:opacity-70"
+                      className="mt-3 sm:mt-0 sm:absolute sm:right-1 sm:top-1 sm:bottom-1 sm:h-auto rounded-2xl sm:rounded-full bg-gradient-to-r from-primary to-accent text-white hover:brightness-110 shadow-[0_0_15px_rgba(124,58,237,0.2)] hover:shadow-[0_0_20px_rgba(124,58,237,0.35)] transition-all duration-200 shrink-0 group px-5 py-3 sm:py-1.5 font-medium disabled:opacity-70 w-full sm:w-auto justify-center border-none"
                     >
                       {status === "loading" ? (
                         <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-white" />
@@ -162,11 +170,11 @@ export function Footer() {
               )}
             </div>
           </div>
-
+ 
           {/* Link columns */}
-          <div className="grid gap-8 sm:grid-cols-3 lg:col-span-7 lg:pl-10">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7 lg:pl-10">
             {FOOTER_LINKS.map((col) => (
-              <div key={col.heading} className={col.heading === "Connect" ? "hidden sm:block" : ""}>
+              <div key={col.heading}>
                 <h4 className="font-display text-[15px] font-semibold text-text-primary">
                   {col.heading}
                 </h4>

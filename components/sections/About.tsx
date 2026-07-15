@@ -1,8 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "framer-motion";
 import { Cloud, Users, Rocket, BookOpen } from "lucide-react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const PILLARS = [
   {
@@ -31,23 +35,46 @@ const PILLARS = [
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-  },
-};
-
 export function About() {
+  const containerRef = React.useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    // Header text reveal
+    gsap.from(".about-header-element", {
+      opacity: 0,
+      y: 20,
+      stagger: 0.1,
+      duration: 0.6,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".about-header-container",
+        start: "top 85%",
+      },
+    });
+
+    // Grid items reveal
+    gsap.from(".about-grid-item", {
+      opacity: 0,
+      y: 30,
+      stagger: 0.1,
+      duration: 0.7,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".about-grid-container",
+        start: "top 85%",
+      },
+    });
+
+    // Refresh ScrollTrigger to calculate offsets correctly after DOM is fully laid out
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
+
+    return () => clearTimeout(refreshTimer);
+  }, { scope: containerRef });
+
   return (
-    <section id="about" className="bg-grid bg-noise relative overflow-hidden bg-bg min-h-screen">
+    <section ref={containerRef} id="about" className="bg-grid bg-noise relative overflow-hidden bg-bg min-h-screen">
       {/* Ambient glow */}
       <div
         aria-hidden
@@ -55,65 +82,43 @@ export function About() {
       />
 
       <div className="relative mx-auto max-w-content px-4 sm:px-6 pt-28 pb-16 md:pt-32 md:pb-24 lg:pt-32 lg:pb-32">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-          className="max-w-2xl"
-        >
-          <motion.p
-            variants={itemVariants}
-            className="text-[11px] uppercase tracking-[0.16em] text-muted"
-          >
+        <div className="max-w-2xl about-header-container">
+          <p className="about-header-element text-[11px] uppercase tracking-[0.16em] text-muted">
             What we do
-          </motion.p>
-          <motion.h2
-            variants={itemVariants}
-            className="mt-4 font-display text-[32px] sm:text-[36px] md:text-[44px] font-semibold leading-[1.1] tracking-tight text-text-primary"
-          >
+          </p>
+          <h2 className="about-header-element mt-4 font-display text-[32px] sm:text-[36px] md:text-[44px] font-semibold leading-[1.1] tracking-tight text-text-primary">
             We don&apos;t just learn cloud.
             <br />
             <span className="text-gradient">We build on it.</span>
-          </motion.h2>
-          <motion.p
-            variants={itemVariants}
-            className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[16px] leading-relaxed text-text-secondary"
-          >
+          </h2>
+          <p className="about-header-element mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[16px] leading-relaxed text-text-secondary">
             AWS Student Builder Group is a community of makers who believe the
             best way to learn cloud is to build real projects, break things, and
             iterate fast — together.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="mt-16 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4"
-        >
+        <div className="about-grid-container mt-16 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
           {PILLARS.map((pillar) => {
             const Icon = pillar.icon;
             return (
-              <motion.div
+              <div
                 key={pillar.title}
-                variants={itemVariants}
-                className="group flex flex-col gap-4 relative bg-bg p-6 sm:p-8 md:p-10 transition-colors hover:bg-white/[0.02]"
+                className="about-grid-item group relative bg-bg p-8 transition-colors hover:bg-white/[0.02]"
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary-light transition-colors duration-200 group-hover:bg-primary/20">
-                  <Icon size={20} strokeWidth={1.75} />
-                </span>
-                <h3 className="font-display text-[17px] font-semibold tracking-tight text-text-primary">
+                <div className="mb-5 inline-flex rounded-lg bg-white/[0.04] p-3 text-primary transition-colors group-hover:bg-primary/10">
+                  <Icon size={24} strokeWidth={1.5} />
+                </div>
+                <h3 className="mb-2 font-display text-[17px] font-medium text-text-primary">
                   {pillar.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-text-secondary">
+                <p className="text-[14px] leading-relaxed text-text-secondary">
                   {pillar.description}
                 </p>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -50,7 +50,7 @@ export function Navbar() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="primary" href="#">Join Community</NavbarButton>
+            <NavbarButton variant="primary" href="https://www.meetup.com/aws-sbg-at-tulas-institute/" target="_blank">Join Community</NavbarButton>
           </div>
         </NavBody>
 
@@ -80,7 +80,8 @@ export function Navbar() {
             ))}
             <div className="mt-2 flex w-full flex-col gap-3 border-t border-white/5 pt-3">
               <NavbarButton
-                href="#"
+                href="https://www.meetup.com/aws-sbg-at-tulas-institute/"
+                target="_blank"
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"
                 className="w-full"

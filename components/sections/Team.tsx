@@ -1,8 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "framer-motion";
 import ProfileCard from "@/components/ui/ProfileCard";
+import LightRays from "@/components/ui/LightRays";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type Member = {
   name: string;
@@ -52,67 +57,91 @@ const TEAM: Member[] = [
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-  },
-};
-
 export function Team() {
+  const containerRef = React.useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    // Header reveal
+    gsap.from(".team-header-el", {
+      opacity: 0,
+      y: 20,
+      stagger: 0.15,
+      duration: 0.7,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".team-header-container",
+        start: "top 85%",
+      },
+    });
+
+    // Team members reveal
+    gsap.from(".team-member", {
+      opacity: 0,
+      y: 30,
+      stagger: 0.15,
+      duration: 0.7,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".team-members-container",
+        start: "top 85%",
+      },
+    });
+
+    // Refresh ScrollTrigger to calculate offsets correctly after DOM is fully laid out
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
+
+    return () => clearTimeout(refreshTimer);
+  }, { scope: containerRef });
+
   return (
-    <section id="team" className="bg-grid bg-noise relative overflow-hidden bg-bg min-h-screen">
+    <section ref={containerRef} id="team" className="bg-grid bg-noise relative overflow-hidden bg-bg min-h-screen">
+      {/* Dynamic WebGL Light Rays */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: "hidden", opacity: 0.25 }}>
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#A855F7"
+          raysSpeed={0.8}
+          lightSpread={0.8}
+          rayLength={1.2}
+          followMouse={false}
+          mouseInfluence={0}
+          noiseAmount={0.1}
+          distortion={0.05}
+          saturation={1.4}
+        />
+      </div>
+
+      {/* Headline ambient glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-primary/8 blur-[160px]"
+        className="pointer-events-none absolute left-1/4 top-0 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-primary/15 blur-[120px]"
+      />
+      {/* Secondary glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute right-0 bottom-1/4 h-[450px] w-[450px] translate-x-1/3 rounded-full bg-primary/10 blur-[140px]"
       />
 
       <div className="relative mx-auto max-w-content px-4 sm:px-6 pt-28 pb-16 md:pt-32 md:pb-24 lg:pt-32 lg:pb-32">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-          className="text-center md:text-left"
-        >
-          <motion.p
-            variants={itemVariants}
-            className="text-[11px] uppercase tracking-[0.16em] text-muted"
-          >
+        <div className="team-header-container text-left">
+          <p className="team-header-el text-[11px] uppercase tracking-[0.16em] text-muted">
             The Team
-          </motion.p>
-          <motion.h2
-            variants={itemVariants}
-            className="mt-4 font-display text-[32px] sm:text-[36px] md:text-[44px] font-semibold leading-[1.1] tracking-tight text-text-primary"
-          >
+          </p>
+          <h2 className="team-header-el mt-4 font-display text-[32px] sm:text-[36px] md:text-[44px] font-semibold leading-[1.1] tracking-tight text-text-primary">
             Builders behind the{" "}
             <span className="text-gradient">builders.</span>
-          </motion.h2>
-          <motion.p
-            variants={itemVariants}
-            className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[16px] leading-relaxed text-text-secondary mx-auto md:mx-0"
-          >
+          </h2>
+          <p className="team-header-el mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[16px] leading-relaxed text-text-secondary">
             Students who organise, teach, mentor, and keep the community
             running.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.1 }}
-          className="mt-10 sm:mt-20 grid gap-4 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-items-center"
-        >
+        <div className="team-members-container mt-10 sm:mt-20 grid gap-4 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
           {TEAM.map((member) => (
-            <motion.div key={member.name} variants={itemVariants} className="w-full max-w-[300px] sm:max-w-[340px]">
+            <div key={member.name} className="team-member w-full max-w-[340px]">
               <ProfileCard
                 name={member.name}
                 title={member.role}
@@ -127,9 +156,9 @@ export function Team() {
                 avatarScale={member.avatarScale}
                 socials={member.socials}
               />
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

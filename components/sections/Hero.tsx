@@ -8,26 +8,14 @@ import { Button, buttonVariants } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import LightRays from "@/components/ui/LightRays";
 import { FlipText } from "@/components/ui/flip-text";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.11, delayChildren: 0.15 },
-  },
-};
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 18 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-  },
-};
 
-// Loose network topology — nodes + edges, standing in for the
-// "cloud" the community builds on. Not decoration: the shape is
-// meant to read as infrastructure, not a blob.
+
 const NODES = [
   { id: "n1", x: 420, y: 90, r: 5, delay: 0 },
   { id: "n2", x: 520, y: 170, r: 4, delay: 0.6 },
@@ -74,6 +62,49 @@ export function Hero() {
     mvY.set(relY);
   };
 
+  useGSAP(() => {
+    // Stagger reveal hero contents on load
+    gsap.from(".hero-content-el", {
+      opacity: 0,
+      y: 20,
+      stagger: 0.15,
+      duration: 0.8,
+      ease: "power3.out",
+      delay: 0.2,
+    });
+
+    // Parallax scroll effect for background elements
+    gsap.to(".hero-parallax-bg", {
+      y: 150,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+
+    gsap.to(".hero-parallax-svg", {
+      y: 100,
+      opacity: 0,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+
+    // Refresh ScrollTrigger to calculate offsets correctly after DOM is fully laid out
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
+
+    return () => clearTimeout(refreshTimer);
+  }, { scope: sectionRef });
+
   return (
     <section
       id="top"
@@ -81,7 +112,7 @@ export function Hero() {
       onMouseMove={handleMouseMove}
       className="bg-grid bg-noise relative flex min-h-screen items-center overflow-hidden bg-bg pt-16"
     >
-      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+      <div className="hero-parallax-bg" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
         <LightRays
           raysOrigin="top-center"
           raysColor="#A855F7"
@@ -111,7 +142,7 @@ export function Hero() {
         aria-hidden
         style={{ x: networkX, y: networkY }}
         viewBox="0 0 620 460"
-        className="animate-float-slower pointer-events-none absolute -right-16 top-1/2 hidden h-[560px] w-[560px] -translate-y-1/2 opacity-[0.55] md:block lg:-right-6 xl:right-8"
+        className="hero-parallax-svg animate-float-slower pointer-events-none absolute -right-16 top-1/2 hidden h-[560px] w-[560px] -translate-y-1/2 opacity-[0.55] md:block lg:-right-6 xl:right-8"
       >
         <defs>
           <filter id="node-glow" x="-200%" y="-200%" width="500%" height="500%">
@@ -171,63 +202,58 @@ export function Hero() {
         ))}
       </motion.svg>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="show"
+      <div
         className="relative mx-auto max-w-content px-4 sm:px-6 py-16 md:py-24"
       >
         <div className="max-w-2xl">
-          <motion.div
-            variants={itemVariants}
-            className="mb-7 inline-flex items-center gap-2 rounded-full border border-border bg-white/[0.03] px-3.5 py-1.5 text-[13px] text-text-secondary"
+          <div
+            className="hero-content-el group relative z-0 mb-7 inline-flex items-center gap-2 overflow-hidden rounded-full border border-border px-3.5 py-1.5 text-[13px] text-text-secondary"
           >
+            <div className="absolute inset-0 -z-10 bg-white/[0.03]" />
+            <div className="absolute inset-0 -z-10 animate-shimmer [animation-duration:3.5s] bg-[linear-gradient(110deg,transparent,35%,rgba(255,255,255,0.35),50%,transparent,65%)] bg-[length:300%_100%]" />
+            
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-pulse-dot absolute inline-flex h-full w-full rounded-full bg-primary-light" />
             </span>
-            Applications open for 2026
-          </motion.div>
+            <span>Applications open for 2026</span>
+          </div>
 
-          <motion.h1
-            variants={itemVariants}
-            className="font-display text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] font-semibold leading-[1.08] tracking-tight text-text-primary"
+          <h1
+            className="hero-content-el font-display text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] font-semibold leading-[1.08] tracking-tight text-text-primary"
           >
             <FlipText duration={2.2}>Student builders,</FlipText>
             <br />
             <span className="text-gradient">
               Learn. Build. Deploy. Together.
             </span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            variants={itemVariants}
-            className="mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[17px] leading-relaxed text-muted"
+          <p
+            className="hero-content-el mt-4 sm:mt-5 max-w-lg text-[15px] sm:text-[17px] leading-relaxed text-muted"
           >
             A community for students who&apos;d rather build than just read about it —
             workshops, hackathons, AWS credits, and a peer group that ships real
             projects together.
-          </motion.p>
+          </p>
 
-          <motion.div variants={itemVariants} className="mt-8 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
-            <a
-              href="https://www.meetup.com/aws-sbg-at-tulas-institute/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(buttonVariants({ size: "lg" }), "glow-primary w-full sm:w-auto justify-center")}
+          <div className="hero-content-el mt-8 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+            <Link
+              href="/register"
+              className={cn(buttonVariants({ size: "lg" }), "glow-primary w-full sm:w-auto justify-center group")}
             >
-              Join Community
+              Register Now
               <ArrowRight
                 size={16}
                 className="ml-2 transition-transform duration-200 group-hover:translate-x-0.5"
               />
-            </a>
+            </Link>
             <Link href="/events" className={cn(buttonVariants({ size: "lg", variant: "secondary" }), "group w-full sm:w-auto justify-center transition-all hover:bg-white/[0.08]")}>
               <CalendarDays size={16} className="mr-2 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:text-primary-light" />
               Explore Events
             </Link>
-          </motion.div>
+          </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Scroll cue */}
       <motion.div
