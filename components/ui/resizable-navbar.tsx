@@ -242,10 +242,10 @@ export const MobileNavMenu = ({
           
           {/* Menu Container */}
           <motion.div
-            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            initial={{ opacity: 0, y: -8, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.98 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ opacity: 0, y: -8, scale: 0.97 }}
+            transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
             className={cn(
               "absolute inset-x-0 top-[calc(100%+0.75rem)] z-50 flex w-full flex-col items-start justify-start gap-1 rounded-2xl bg-bg/95 backdrop-blur-xl border border-white/10 p-3 shadow-[0_8px_40px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.05)_inset]",
               className,
@@ -253,7 +253,22 @@ export const MobileNavMenu = ({
           >
             {/* Decorative top accent */}
             <div className="mx-auto mb-2 h-[2px] w-12 rounded-full bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-            {children}
+            {/* Stagger children (nav items) with cascading entrance */}
+            <div className="flex w-full flex-col gap-1">
+              {React.Children.map(children, (child, index) => (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.15,
+                    delay: 0.05 + index * 0.04,
+                    ease: [0.23, 1, 0.32, 1],
+                  }}
+                >
+                  {child}
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </>
       )}
@@ -358,7 +373,7 @@ export const NavbarButton = ({
   | React.ComponentPropsWithoutRef<"button">
 )) => {
   const baseStyles =
-    "px-5 py-2 rounded-full text-[13px] font-semibold relative cursor-pointer hover:-translate-y-0.5 active:scale-95 transition-all duration-200 inline-block text-center tracking-wide";
+    "px-5 py-2 rounded-full text-[13px] font-semibold relative cursor-pointer hover:-translate-y-0.5 active:scale-[0.97] transition-transform transition-shadow duration-200 inline-block text-center tracking-wide";
 
   const variantStyles = {
     primary:

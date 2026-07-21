@@ -141,7 +141,7 @@ export function LearningHub() {
                 key={resource.title}
                 href={resource.link}
                 variants={itemVariants}
-                className="group flex flex-col gap-4 rounded-xl border border-border bg-bg p-6 transition-all duration-300 hover:border-primary-light/30 hover:bg-white/[0.02]"
+                className="group flex flex-col gap-4 rounded-xl border border-border bg-bg p-6 transition-colors transition-shadow duration-300 hover:border-primary-light/30 hover:bg-white/[0.02]"
               >
                 <div className="flex items-center justify-between">
                   <span
@@ -151,7 +151,7 @@ export function LearningHub() {
                   </span>
                   <ExternalLink
                     size={14}
-                    className="text-muted opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:text-primary-light"
+                    className="text-muted opacity-0 transition-opacity transition-colors duration-200 group-hover:opacity-100 group-hover:text-primary-light"
                   />
                 </div>
 

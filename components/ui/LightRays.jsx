@@ -57,7 +57,15 @@ const LightRays = ({
   const meshRef = useRef(null);
   const cleanupFunctionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [shouldRenderWebGL, setShouldRenderWebGL] = useState(true);
   const observerRef = useRef(null);
+
+  useEffect(() => {
+    const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768;
+    if (isMobile) {
+      setShouldRenderWebGL(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -81,7 +89,7 @@ const LightRays = ({
   }, []);
 
   useEffect(() => {
-    if (!isVisible || !containerRef.current) return;
+    if (!shouldRenderWebGL || !isVisible || !containerRef.current) return;
 
     if (cleanupFunctionRef.current) {
       cleanupFunctionRef.current();

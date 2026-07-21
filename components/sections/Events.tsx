@@ -162,7 +162,7 @@ export function Events() {
 
                 {/* Arrow Icon */}
                 <div className="absolute right-6 top-6 sm:relative sm:right-auto sm:top-auto flex items-start">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white/[0.02] text-text-secondary transition-all duration-300 group-hover:bg-primary group-hover:border-primary group-hover:text-white group-hover:rotate-45">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white/[0.02] text-text-secondary transition-colors transition-transform duration-300 group-hover:bg-primary group-hover:border-primary group-hover:text-white group-hover:rotate-45">
                     <ArrowUpRight size={18} />
                   </div>
                 </div>

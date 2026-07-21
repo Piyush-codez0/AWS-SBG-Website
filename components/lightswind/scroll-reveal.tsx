@@ -24,12 +24,6 @@ export interface ScrollRevealProps {
   threshold?: number;
   /** Animation duration in seconds */
   duration?: number;
-  /** Spring animation configuration */
-  springConfig?: {
-    damping?: number;
-    stiffness?: number;
-    mass?: number;
-  };
   /** Text size variant */
   size?: "sm" | "md" | "lg" | "xl" | "2xl";
   /** Text alignment */
@@ -70,11 +64,6 @@ export function ScrollReveal({
   staggerDelay = 0.05,
   threshold = 0.5,
   duration = 0.8,
-  springConfig = { // Default spring config is always good to have
-    damping: 25,
-    stiffness: 100,
-    mass: 1,
-  },
   size = "lg",
   align = "left",
   variant = "default",
@@ -135,10 +124,8 @@ export function ScrollReveal({
       filter: "blur(0px)",
       y: 0,
       transition: {
-        // Removed `type: "spring"` here. Framer Motion infers "spring"
-        // when damping, stiffness, or mass are present.
-        ...springConfig,
-        duration, // This is a common property for all transition types
+        duration,
+        ease: [0.23, 1, 0.32, 1], // Strong ease-out — feels responsive, per Emil Kowalski
       },
     },
   };

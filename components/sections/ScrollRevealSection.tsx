@@ -9,9 +9,9 @@ export function ScrollRevealSection() {
         variant="primary"
         enableBlur
         baseOpacity={0.05}
-        baseRotation={4}
-        staggerDelay={0.08}
-        springConfig={{ damping: 20, stiffness: 120, mass: 0.6 }}
+        baseRotation={3}
+        staggerDelay={0.07}
+        duration={0.6}
         containerClassName="max-w-4xl mx-auto px-6"
       >
         Learn cloud, build projects, and grow together — powered by AWS.

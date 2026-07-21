@@ -247,7 +247,7 @@ export function Hero() {
                 className="ml-2 transition-transform duration-200 group-hover:translate-x-0.5"
               />
             </Link>
-            <Link href="/events" className={cn(buttonVariants({ size: "lg", variant: "secondary" }), "group w-full sm:w-auto justify-center transition-all hover:bg-white/[0.08]")}>
+            <Link href="/events" className={cn(buttonVariants({ size: "lg", variant: "secondary" }), "group w-full sm:w-auto justify-center transition-colors hover:bg-white/[0.08]")}>
               <CalendarDays size={16} className="mr-2 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:text-primary-light" />
               Explore Events
             </Link>

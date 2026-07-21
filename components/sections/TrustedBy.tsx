@@ -45,7 +45,7 @@ export function TrustedBy() {
             <motion.li
               key={partner.name}
               variants={itemVariants}
-              className="flex items-center justify-center opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+              className="flex items-center justify-center opacity-60 grayscale transition-opacity transition-[filter] duration-300 hover:opacity-100 hover:grayscale-0"
             >
               <Image
                 src={partner.logo}

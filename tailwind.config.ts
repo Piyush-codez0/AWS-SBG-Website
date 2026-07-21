@@ -13,6 +13,16 @@ const config: Config = {
       screens: { "2xl": "1280px" },
     },
     extend: {
+      transitionDuration: {
+        "160": "160ms",
+        "250": "250ms",
+        "400": "400ms",
+      },
+      transitionTimingFunction: {
+        "ease-out": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "ease-in-out": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "ease-drawer": "cubic-bezier(0.32, 0.72, 0, 1)",
+      },
       colors: {
         primary: {
           DEFAULT: "#7C3AED",

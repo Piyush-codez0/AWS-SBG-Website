@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Linkedin, Instagram, Mail, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { subscribeToNewsletter } from "@/app/actions/newsletter";
+import { motion, AnimatePresence } from "framer-motion";
 
 const FOOTER_LINKS = [
   {
@@ -115,7 +116,7 @@ export function Footer() {
             </div>
 
             {/* Newsletter Subscription */}
-            <div className="relative overflow-hidden flex flex-col gap-3 rounded-2xl border border-white/[0.05] bg-white/[0.02] p-5 backdrop-blur-sm mt-2 hover:border-primary/20 hover:bg-white/[0.04] transition-all duration-300 group/card">
+            <div className="relative overflow-hidden flex flex-col gap-3 rounded-2xl border border-white/[0.05] bg-white/[0.02] p-5 backdrop-blur-sm mt-2 hover:border-primary/20 hover:bg-white/[0.04] transition-colors transition-shadow duration-300 group/card">
               {/* Top accent glow line */}
               <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
               
@@ -126,32 +127,47 @@ export function Footer() {
               <p className="text-[13px] text-text-secondary leading-relaxed max-w-[320px]">
                 Get updates on upcoming workshops, cloud events, and hackathons straight to your inbox.
               </p>
-              {status === "success" ? (
-                <div className="mt-2 flex items-center gap-2 rounded-xl bg-green-500/10 px-4 py-3 text-sm text-green-400 border border-green-500/20">
-                  <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-500/20">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  </div>
-                  Thanks for subscribing!
-                </div>
-              ) : (
-                <form className="mt-2 relative flex flex-col max-w-[360px]" onSubmit={handleSubscribe}>
+              <AnimatePresence mode="wait">
+                {status === "success" ? (
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
+                    className="mt-2 flex items-center gap-2 rounded-xl bg-green-500/10 px-4 py-3 text-sm text-green-400 border border-green-500/20"
+                  >
+                    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-500/20">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    Thanks for subscribing!
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.97 }}
+                    transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
+                    className="mt-2 relative flex flex-col max-w-[360px]"
+                    onSubmit={handleSubscribe}
+                  >
                   <div className="relative flex flex-col sm:flex-row sm:items-center">
                     <div className="relative w-full">
                       <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted" />
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         disabled={status === "loading"}
-                        placeholder="Enter your email address" 
-                        className="w-full rounded-2xl sm:rounded-full border border-white/10 bg-white/[0.02] py-3 pl-10 pr-4 sm:pr-[115px] text-sm text-text-primary outline-none transition-all placeholder:text-muted focus:border-primary/50 focus:bg-white/[0.05] focus:ring-1 focus:ring-primary/50 disabled:opacity-50"
+                        placeholder="Enter your email address"
+                        className="w-full rounded-2xl sm:rounded-full border border-white/10 bg-white/[0.02] py-3 pl-10 pr-4 sm:pr-[115px] text-sm text-text-primary outline-none transition-colors transition-shadow placeholder:text-muted focus:border-primary/50 focus:bg-white/[0.05] focus:ring-1 focus:ring-primary/50 disabled:opacity-50"
                         required
                       />
                     </div>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       disabled={status === "loading"}
-                      className="mt-3 sm:mt-0 sm:absolute sm:right-1 sm:top-1 sm:bottom-1 sm:h-auto rounded-2xl sm:rounded-full bg-gradient-to-r from-primary to-accent text-white hover:brightness-110 shadow-[0_0_15px_rgba(124,58,237,0.2)] hover:shadow-[0_0_20px_rgba(124,58,237,0.35)] transition-all duration-200 shrink-0 group px-5 py-3 sm:py-1.5 font-medium disabled:opacity-70 w-full sm:w-auto justify-center border-none"
+                      className="mt-3 sm:mt-0 sm:absolute sm:right-1 sm:top-1 sm:bottom-1 sm:h-auto rounded-2xl sm:rounded-full bg-gradient-to-r from-primary to-accent text-white hover:brightness-110 shadow-[0_0_15px_rgba(124,58,237,0.2)] hover:shadow-[0_0_20px_rgba(124,58,237,0.35)] transition-shadow transition-[filter] duration-200 shrink-0 group px-5 py-3 sm:py-1.5 font-medium disabled:opacity-70 w-full sm:w-auto justify-center border-none"
                     >
                       {status === "loading" ? (
                         <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-white" />
@@ -166,8 +182,9 @@ export function Footer() {
                   {status === "error" && (
                     <p className="mt-2 text-xs text-red-400 pl-2">{errorMessage}</p>
                   )}
-                </form>
-              )}
+                </motion.form>
+                )}
+              </AnimatePresence>
             </div>
           </div>
  
@@ -191,7 +208,7 @@ export function Footer() {
                             className="group flex w-fit items-center gap-1.5 text-[14px] text-text-secondary transition-colors hover:text-primary-light"
                           >
                             {link.label}
-                            <ArrowRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100" />
+                            <ArrowRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-opacity transition-transform duration-200 group-hover:translate-x-0 group-hover:opacity-100" />
                           </a>
                         ) : (
                           <Link
@@ -199,7 +216,7 @@ export function Footer() {
                             className="group flex w-fit items-center gap-1.5 text-[14px] text-text-secondary transition-colors hover:text-primary-light"
                           >
                             {link.label}
-                            <ArrowRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100" />
+                            <ArrowRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-opacity transition-transform duration-200 group-hover:translate-x-0 group-hover:opacity-100" />
                           </Link>
                         )}
                       </li>
@@ -221,7 +238,7 @@ export function Footer() {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.03] text-text-secondary transition-all duration-200 hover:bg-primary/20 hover:text-primary-light"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.03] text-text-secondary transition-colors duration-200 hover:bg-primary/20 hover:text-primary-light"
                 >
                   <Icon size={16} />
                 </a>

@@ -131,6 +131,7 @@ export const metadata: Metadata = {
 };
 
 import SmoothScroll from "@/components/layout/SmoothScroll";
+import { MotionConfigWrapper } from "@/components/layout/MotionConfigWrapper";
 
 export default function RootLayout({
   children,
@@ -142,11 +143,13 @@ export default function RootLayout({
         <WebSiteJsonLd />
       </head>
       <body>
-        <SmoothScroll>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </SmoothScroll>
+        <MotionConfigWrapper>
+          <SmoothScroll>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </SmoothScroll>
+        </MotionConfigWrapper>
       </body>
     </html>
   );
